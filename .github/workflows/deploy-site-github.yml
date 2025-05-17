@@ -3,7 +3,7 @@ name: Deploy VitePress site to Github Pages
 on:
   push:
     branches:
-      - release
+      - master
 
 jobs:
   build-and-deploy:
