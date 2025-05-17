@@ -7,7 +7,7 @@ import zhCN from './locales/zh-CN'
 
 
 export default defineConfig({
-  base: './',
+  base: '/ht-ui-uni/',
   vite: {
     plugins: [
       MarkdownTransform(),
