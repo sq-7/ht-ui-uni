@@ -7,8 +7,8 @@ import zhCN from './locales/zh-CN'
 
 
 export default defineConfig({
+  base: './',
   vite: {
-    base: './',
     plugins: [
       MarkdownTransform(),
       viteCompression({
