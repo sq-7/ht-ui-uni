@@ -71,13 +71,13 @@ export default defineConfig({
   },
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['link', { rel: 'stylesheet', href: '/petercatai/assistant.min.css' }],
-    ['script', {src: '/petercatai/react.development.js' }],
-    ['script', {src: '/petercatai/react-dom.development.js' }],
-    ['script', {src: '/petercatai/dayjs.min.js' }],
-    ['script', {src: '/petercatai/antd.js' }],
-    ['script', {src: '/petercatai/lottie.js' }],
-    ['script', {src: '/petercatai/assistant.min.js' }],
+    ['link', { rel: 'stylesheet', href: '/ht-ui-uni/petercatai/assistant.min.css' }],
+    ['script', {src: '/ht-ui-uni/petercatai/react.development.js' }],
+    ['script', {src: '/ht-ui-uni/petercatai/react-dom.development.js' }],
+    ['script', {src: '/ht-ui-uni/petercatai/dayjs.min.js' }],
+    ['script', {src: '/ht-ui-uni/petercatai/antd.js' }],
+    ['script', {src: '/ht-ui-uni/petercatai/lottie.js' }],
+    ['script', {src: '/ht-ui-uni/petercatai/assistant.min.js' }],
     ['script', {}, `
       !function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"3J4q4tM6fN0n1fbZ",ck:"3J4q4tM6fN0n1fbZ"});
     `]
