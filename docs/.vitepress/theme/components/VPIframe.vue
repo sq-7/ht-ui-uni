@@ -109,7 +109,7 @@ function sendLanguageMessage() {
 
 onMounted(() => {
   baseUrl.value = process.env.NODE_ENV === 'production'
-    ? `${location.origin}/demo/?timestamp=${new Date().getTime()}#/`
+    ? `${location.origin}/ht-ui-uni/demo/?timestamp=${new Date().getTime()}#/`
     : 'http://localhost:5173/demo/#/'
 
   // 监听 iframe 加载完成事件
