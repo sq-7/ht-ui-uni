@@ -16,13 +16,7 @@
         </ht-badge>
       </demo-block>
       <demo-block :title="$t('ju-bu-shui-yin')">
-        <ht-watermark
-          :opacity="0.8"
-          image="https://ht-ui-uni.cn/logo.png"
-          :image-width="38"
-          :image-height="38"
-          :full-screen="false"
-        ></ht-watermark>
+        <ht-watermark :opacity="0.8" image="https://ht-ui-uni.cn/logo.png" :image-width="38" :image-height="38" :full-screen="false"></ht-watermark>
         <ht-badge custom-class="badge" :modelValue="12">
           <ht-button :round="false" type="info" size="small">{{ $t('pingLun') }}</ht-button>
         </ht-badge>
