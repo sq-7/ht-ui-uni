@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
+// 用正则一段一段地匹配组件的scss变量字符串
 const extractSCSSVariables = (scssFilePath: string): Record<string, string> => {
   const scssContent = fs.readFileSync(scssFilePath, 'utf8')
   const componentVarIndex = scssContent.indexOf('/* component var */')
@@ -27,7 +28,7 @@ const extractSCSSVariables = (scssFilePath: string): Record<string, string> => {
 }
 
 /**
- * 生成 TypeScript 文件内容
+ * 生成 config-provider 组件和各组件的样式变量的类型声明
  * @param {object} variables - 变量对象
  * @returns {string} - TypeScript 文件内容
  */
@@ -126,7 +127,9 @@ export type baseThemeVars = {
         line = line.trim()
         if (line.split(':').length === 2) {
           const parts = line.split(':')
-          const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+          const propertyName = parts[0]
+            .replace(/^\$-/, '')
+            .replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
           tsContent += `  ${propertyName}?: string\n`
         }
       })
