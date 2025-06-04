@@ -52,6 +52,7 @@ inquirer
       return
     }
     // 项目版本更新
+    // 根据package.json更新版本，生成changelog，提交git commit，创建对应版本git tag
     switch (answers['version']) {
       case '🐛 patch 小版本':
         execSync('pnpm release-patch')
@@ -66,29 +67,35 @@ inquirer
         execSync('pnpm release-minor')
         break
     }
-    // 生成日志
+    // 生成日志 复制 changelog 到文档、uni组件库目录下
     execSync('pnpm build:changelog')
     // 更新版本
+    // 从 package.json 拿到 standard-version 更新后的最新版本
     const file = readFileSync(path.resolve(__dirname, '../package.json'))
     const packageJson = JSON.parse(file.toString())
     const newVersion = packageJson.version
 
-    // 处理文档中的最低版本标识
+    // 处理文档中的最低版本标识 把最低版本占位符替换为当前版本
     handleLowestVersion(path.resolve(__dirname, '../docs'), newVersion)
 
     console.log(`√ bumping version in package.json from ${oldVersion} to ${newVersion}`)
+    // 更新 uni 组件库内的package.json版本
     const tarfetPackageJson = require('../src/uni_modules/ht-ui-uni/package.json')
     tarfetPackageJson.version = newVersion
     writeFileSync(path.resolve(src, 'package.json'), JSON.stringify(tarfetPackageJson))
-    // 生成制品
+    // 生成 config-provider 的 主题变量类型声明
     execSync('pnpm build:theme-vars')
     execSync('pnpm lint')
+    // stage all changes in entire repository
     execSync('git add -A ')
+    // Auto-stages modified/deleted tracked files
     execSync(`git commit -am "build: compile ${newVersion}"`)
+    // create a annotated tag
     execSync(`git tag -a v${newVersion} -am "chore(release): ${newVersion}"`)
     console.log('√ committing changes')
     const branch = execSync('git branch --show-current').toString().replace(/\*/g, '').replace(/ /g, '')
     console.log('🎉 版本发布成功')
+    // push all related lightweight and annotated tags of this push
     const tip = 'Run `git push --follow-tags origin ' + branch + '` ' + 'to publish'
     console.log(tip.replace(/\n/g, ''))
   })

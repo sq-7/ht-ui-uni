@@ -1,10 +1,10 @@
 {
   "name": "ht-ui-uni",
-  "version": "1.0.1",
+  "version": "0.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Moonofweisheng/ht-ui-uni.git"
+    "url": "https://github.com/sq-7/ht-ui-uni.git"
   },
   "scripts": {
     "dev:app": "uni -p app",

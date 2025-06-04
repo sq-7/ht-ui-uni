@@ -14,9 +14,15 @@ const extractSCSSVariables = (scssFilePath: string): Record<string, string> => {
   const scssContentToProcess = scssContent.substring(componentVarIndex + '/* component var */'.length)
 
   const variableRegex = /\/\*\s*([a-zA-Z0-9-]+)\s*\*\/([\s\S]*?)(?=\/\*\s*([a-zA-Z0-9-]+)\s*\*\/|$)/g
+  // \/\*\s*([a-zA-Z0-9-]+)\s*\*\/ 匹配的是/*任意数量空白字符，一个或多个的大小写字母数字和连字符，*/
+  //([\s\S]*?) ()：捕获组，[\s\S]：匹配任意字符，*?：非贪婪匹配（尽可能少匹配字符，直到遇到后续条件）
+  // (?=...)：正向先行断言（匹配位置，不消耗字符）要求当前位置之后必须满足 ... 的条件，但不包含在结果中。
+  // 然后又一个匹配第一行的正则，
+  // |$，或运算符和字符串结尾，作用是断言后要么是下一个注释快，要么是字符串结束
 
   const variables: Record<string, string> = {}
 
+  // 匹配到 /* action-sheet */ 加上该组件的变量的字符串，actionsheet作为key，变量字符串作为value，放入结果对象
   let match
   while ((match = variableRegex.exec(scssContentToProcess)) !== null) {
     const keyComment = match[1].replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
@@ -120,20 +126,21 @@ export type baseThemeVars = {
 
   for (const key in variables) {
     tsContent += `export type ${key}ThemeVars = {\n`
+    // 组件有多行变量
     if (variables[key].includes('\n')) {
       const lines = variables[key].split('\n')
 
+      // 把每行css变量拿出来，然后设置ts类型
       lines.forEach((line) => {
         line = line.trim()
         if (line.split(':').length === 2) {
           const parts = line.split(':')
-          const propertyName = parts[0]
-            .replace(/^\$-/, '')
-            .replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+          const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
           tsContent += `  ${propertyName}?: string\n`
         }
       })
     } else {
+      // 单行
       const line = variables[key]
       if (line.split(':').length === 2) {
         const parts = line.split(':')
@@ -145,6 +152,8 @@ export type baseThemeVars = {
     tsContent += '}\n\n'
   }
 
+  // 最后拼接完整的 config-provider 的主题变量类型声明
+
   const exportTypes = Object.keys(variables)
     .map((key) => `${key}ThemeVars`)
     .join(' & ')
@@ -154,11 +163,13 @@ export type baseThemeVars = {
 }
 
 const tsFilePath = path.resolve(__dirname, '../src/uni_modules/ht-ui-uni/components/ht-config-provider/types.ts')
+// 包含每个组件的css变量
 const scssFilePath = path.resolve(__dirname, '../src/uni_modules/ht-ui-uni/components/common/abstracts/variable.scss')
 
 const variables = extractSCSSVariables(scssFilePath)
 const tsContent = generateTSFileContent(variables)
 
+// 生成 config-provider 的 主题变量类型声明
 fs.writeFileSync(tsFilePath, tsContent)
 
 console.log('TS file generated successfully!')
