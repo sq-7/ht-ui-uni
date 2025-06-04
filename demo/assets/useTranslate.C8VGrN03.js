@@ -1,0 +1,1 @@
+import{ai as s,aj as a,ak as t,ab as r,J as e}from"./index-Bl407YMq.js";const n=n=>{const o=n?s(n)+".":"";return{translate:(s,...n)=>{const c=a.messages(),i=t(c,o+s);return r(i)?i(...n):e(i)?i:`${o}${s}`}}};export{n as u};

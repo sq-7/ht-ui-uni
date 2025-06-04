@@ -1,0 +1,1 @@
+import{r as a,a2 as e,b5 as t,am as n,J as s}from"./index-Bl407YMq.js";function u(u){const o=a(null),r=()=>{t&&n(o.value)?cancelAnimationFrame(o.value):s(o.value)&&clearTimeout(o.value)};return e((()=>{r()})),{start:()=>{const a=a=>{u(a)};o.value=t?requestAnimationFrame(a):setTimeout((()=>a(Date.now())),1e3/30)},cancel:r}}export{u};
